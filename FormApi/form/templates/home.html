@@ -11,7 +11,31 @@
     </style>
 </head>
 <body>
+    {% comment %} <div class="form-group">
+      <label for="">{{form.first_name.label}}</label>
+      <div class="form-control">{{form.first_name}}</div>
+      
+    </div>
+    
+    
+    {{form.username.label}}
+    {{form.username.id_for_label}}
+    {{form.username}} {% endcomment %}
     <h1>Form</h1>
-    {{form.as_p}}
+    {{form.as_p}}<hr>
+    <h1>Loop with Form</h1>
+    {% for f in form.visible_fields %}
+    {{f.label_tag}} {{f}} {{f.help_text}} 
+    
+    {% endfor %} <hr>
+    <h1>Loop each fields with Form</h1>
+    {% for f in form %}
+        {{f.label}} {{f}}
+    
+    
+    {% endfor %}
+    {% for hidden in form.hidden_fields %}
+        {{hidden}}
+    {% endfor %}
 </body>
 </html>
