@@ -18,8 +18,8 @@ class UserCreateForm(forms.Form):
     #     return pas1
     
     def clean(self):
-        cleaned_data  = super(UserCreateForm, self).clean()
-        pas1 = cleaned_data['password1']
+        cleaned_data  = super().clean()
+        pas1 = self.cleaned_data['password1']
         if len(pas1) < 8:
-            raise forms.ValidationError('short')            
+            raise forms.ValidationError('password too short')            
         

@@ -1,21 +1,17 @@
 from django import forms
 
 class UserCreateForm(forms.Form):
-    username = forms.CharField(max_length=100)
+    username = forms.CharField(min_length=7)
     email = forms.EmailField(max_length=100)
-    password = forms.CharField(max_length=100)
+    password = forms.CharField(max_length=100, widget=forms.PasswordInput)
+    password2 = forms.CharField(max_length=100, widget=forms.PasswordInput)
     
-    def clean_password(self):
-        password = self.cleaned_data['password']
+    def clean(self):
+        cleaned_data = super().clean()
+        pas1 = self.cleaned_data['password']
+        pas2 = self.cleaned_data['password2']
         
-        if len(password) <= 6:
-            raise forms.ValidationError('password too short')   
-        return password
-    
-    def clean_username(self):
-        name = self.cleaned_data['username']
+        if pas1 != pas2:
+            raise forms.ValidationError('password not match')
         
-        if len(name) < 5:
-            raise forms.ValidationError('username must be 5 characture')
-        return name
     
