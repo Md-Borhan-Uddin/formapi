@@ -1,25 +1,30 @@
 from django import forms
+from .models import Persen
 
-
-class UserCreateForm(forms.Form):
-    first_name = forms.CharField(max_length=100, required=False)
-    last_name = forms.CharField(max_length=100, initial="Tinne")
-    username = forms.CharField(max_length=100,)
-    email = forms.CharField(max_length=100)
-    password1 = forms.CharField(max_length=100, label='password')
-    password2 = forms.CharField(max_length=100, label='Confirm Passwors')
-    
-    # def clean_password1(self):
-    #     pas1 = self.cleaned_data['password1']
-       
-    #     if len(pas1)<8:
-    #         raise forms.ValidationError('Password too short')
-    #         print('Password too short')
-    #     return pas1
-    
-    def clean(self):
-        cleaned_data  = super().clean()
-        pas1 = self.cleaned_data['password1']
-        if len(pas1) < 8:
-            raise forms.ValidationError('password too short')            
+class PersenCreateForm(forms.ModelForm):
+    password2 = forms.CharField(max_length=100, label='Re-Type Password', widget=forms.PasswordInput())
+    class Meta:
+        model = Persen
+        fields = '__all__'
+        labels = {'name':'Username'}
+        widgets = {'password':forms.PasswordInput(attrs={'class':'p_name', 'id':'p_id'})}
+        # error_messages = {
+        #     'name':{
+        #         'required':'Emter your name',
+        #     },
+        # }
+            
+        # error_messages = {
+        #     'name': {
+        #         'required': "This is a custom error message from modelform meta",
+        #     },
+        # }    
+        
+        def clean(self):
+            cleaned_data = super().clean()
+            n = self.cleaned_data.get('name')
+            print(n)
+            if len(n) < 6:
+                raise forms.ValidationError('must be 6 char')
+            
         
