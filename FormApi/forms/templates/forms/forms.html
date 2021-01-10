@@ -20,8 +20,8 @@
         {{ form.non_field_errors}}
          {% for field in form %}
  
-            {{ field.label_tag}} {{field}} 
-            {% for error in field.errors %}<div class="errorlist">{{ error }}</div> {% endfor %}
+            {{ field.label_tag}} {{field}} {{field.errors}}
+            {% comment %} {% for error in field.errors %}<div class="errorlist">{{ error }}</div> {% endfor %} {% endcomment %}
         {% endfor %} 
         {% comment %} {{form.as_p}} {% endcomment %}
         <input type="submit" value="submit">
